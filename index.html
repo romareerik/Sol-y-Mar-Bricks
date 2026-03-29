@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sol y Mar Bricks</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+  <main class="okvir">
+    <header class="glava">
+      <section class="znamka" aria-label="Naslov igre">
+        <p class="tag">Erik Romare, 4.RA</p>
+        <h1 class="naslov">Sol y Mar Bricks</h1>
+        <p class="opis">Razbij poletne bloke ter drži žogico nad valovi.</p>
+      </section>
+    </header>
+
+    <section class="igra-del" aria-label="Igralno polje in kontrole">
+      <section class="platno-ok">
+        <canvas id="igraPlatno" width="720" height="480" aria-label="Igra Sol y Mar Bricks"></canvas>
+      </section>
+
+      <aside class="desno">
+        <section class="nadzor" aria-label="Igralni nadzor in statistika">
+          <div class="kart">
+            <span class="ozn">Točke:</span>
+            <strong id="tocke">0</strong>
+          </div>
+
+          <div class="kart">
+            <span class="ozn">Čas:</span>
+            <strong id="cas">00:00</strong>
+          </div>
+
+          <label class="kart tezav" for="tezavnost">
+            <span class="ozn">Težavnost:</span>
+            <select id="tezavnost" class="izbor">
+              <option value="easy">Lahka</option>
+              <option value="medium" selected>Srednja</option>
+              <option value="hard">Težka</option>
+            </select>
+          </label>
+
+          <div class="gumbi">
+            <button id="zacetek" class="gumb gumb-zac" type="button">Začni</button>
+            <button id="premor" class="gumb gumb-pre" type="button">Pavza</button>
+            <button id="navodila" class="gumb gumb-nav" type="button">Navodila</button>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="script.js"></script>
+</body>
+</html>
