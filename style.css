@@ -21,72 +21,42 @@
 body {
   margin: 0;
   min-height: 100vh;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 24px;
   overflow: hidden;
   position: relative;
   color: var(--besedilo);
-  font-family: "Baloo 2", "Trebuchet MS", sans-serif;
+  font-family: "Baloo 2", sans-serif;
   background:
-    radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.22), transparent 18%),
-    radial-gradient(circle at 50% 78%, rgba(25, 183, 197, 0.16), transparent 24%),
     linear-gradient(180deg, #ffe08f 0%, #ffb478 34%, #ff8777 100%);
 }
 
-body::before,
 body::after {
   content: "";
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
   filter: blur(18px);
-}
-
-body::before {
-  left: -60px;
-  bottom: -110px;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(25, 183, 197, 0.32) 0%, rgba(25, 183, 197, 0) 72%);
-}
-
-body::after {
   top: 26px;
   right: 84px;
   width: 210px;
   height: 210px;
   background:
     radial-gradient(circle, rgba(255, 251, 223, 0.95) 0%, rgba(255, 220, 114, 0.92) 38%, rgba(255, 196, 96, 0.22) 68%, rgba(255, 196, 96, 0) 72%);
-  box-shadow:
-    0 0 42px rgba(255, 212, 119, 0.3),
-    0 0 90px rgba(255, 196, 96, 0.18);
 }
 
 .okvir {
   position: relative;
   width: min(100%, 1100px);
-  padding: 28px;
-  border-radius: 34px;
+  padding: 25px;
+  border-radius: 30px;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(12, 75, 98, 0.5) 0%, rgba(11, 93, 116, 0.6) 100%),
-    radial-gradient(circle at 12% 10%, rgba(255, 227, 129, 0.7), transparent 16%);
+  background: linear-gradient(180deg, rgba(10, 89, 117, 0.62) 0%, rgba(8, 65, 93, 0.58) 100%);
   border: 1px solid rgba(255, 244, 210, 0.4);
-  box-shadow:
-    0 26px 60px rgba(110, 52, 44, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(18px);
-}
-
-.okvir::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 90% 10%, rgba(255, 234, 156, 0.22), transparent 18%),
-    radial-gradient(circle at 8% 88%, rgba(28, 184, 198, 0.18), transparent 18%);
-  pointer-events: none;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0,0.3);
+  backdrop-filter: blur(15px);
 }
 
 .glava {
@@ -96,30 +66,17 @@ body::after {
 }
 
 .znamka,
-.kart {
+.card {
   padding: 16px 18px;
   border-radius: 24px;
-  background: linear-gradient(180deg, rgba(10, 89, 117, 0.62) 0%, rgba(8, 65, 93, 0.58) 100%);
   border: 1px solid var(--panel-crta);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 12px 26px rgba(45, 64, 94, 0.18);
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.15);
+  
 }
 
 .znamka {
   position: relative;
   overflow: hidden;
-}
-
-.znamka::after {
-  content: "";
-  position: absolute;
-  right: -24px;
-  bottom: -42px;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 230, 132, 0.34) 0%, rgba(255, 230, 132, 0) 72%);
 }
 
 .tag,
@@ -130,32 +87,30 @@ body::after {
 
 .tag {
   margin-bottom: 8px;
-  font-size: 0.84rem;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: 0.2em;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffe8a0;
 }
 
 .naslov {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-size: 50px;
   line-height: 0.92;
-  letter-spacing: 0.03em;
+  letter-spacing: 1px;
   color: #fff8ea;
-  text-shadow:
-    0 0 18px rgba(255, 220, 124, 0.22),
-    0 2px 0 rgba(126, 63, 53, 0.22);
+  text-shadow:5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .opis {
   margin-top: 10px;
   max-width: 600px;
   color: var(--mehko);
-  font-size: 1.05rem;
+  font-size: 16px;
   line-height: 1.45;
 }
 
-.igra-del {
+.frame {
   position: relative;
   z-index: 1;
   display: grid;
@@ -174,7 +129,7 @@ body::after {
   gap: 12px;
 }
 
-.kart {
+.card {
   min-width: 0;
 }
 
@@ -187,16 +142,16 @@ body::after {
 .ozn {
   display: block;
   margin-bottom: 6px;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  font-size: 14px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(255, 251, 235, 0.94);
 }
 
 #tocke,
 #cas {
-  font-size: 1.65rem;
-  letter-spacing: 0.03em;
+  font-size: 30px;
+  letter-spacing: 3px;
   color: #fffdf8;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
 }
@@ -209,10 +164,9 @@ body::after {
   background: rgba(4, 56, 83, 0.56);
   color: var(--besedilo);
   font: inherit;
-  font-size: 0.96rem;
+  font-size: 15px;
   outline: none;
   appearance: none;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .izbor:focus {
@@ -228,17 +182,17 @@ body::after {
 .gumb {
   min-height: 48px;
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
   padding: 10px 14px;
   font: inherit;
-  font-size: 0.82rem;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  color: #fffaf1;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
+  color: #ffffff;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
   transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
 }
 
@@ -272,27 +226,13 @@ body::after {
   box-shadow: 0 10px 24px rgba(208, 145, 54, 0.24);
 }
 
-.platno-ok {
+.obroba {
   position: relative;
-  padding: 18px;
-  border-radius: 30px;
-  background: linear-gradient(180deg, rgba(255, 184, 107, 0.14) 0%, rgba(12, 107, 137, 0.24) 100%);
-  border: 1px solid rgba(255, 250, 227, 0.34);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 20px 36px rgba(171, 83, 56, 0.14);
-}
-
-.platno-ok::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 245, 220, 0.18);
-  pointer-events: none;
+  border: 4px solid rgba(11, 71, 108, 0.34);
 }
 
-#igraPlatno {
+#igra {
   display: block;
   width: 100%;
   height: auto;
@@ -328,8 +268,8 @@ body::after {
 
 .swal2-popup.verano-alert .swal2-title {
   color: #fffdf7 !important;
-  font-size: 2rem !important;
-  letter-spacing: 0.04em;
+  font-size: 25px !important;
+  letter-spacing: 2px;
 }
 
 .swal2-popup.verano-alert .swal2-html-container {
@@ -371,7 +311,7 @@ body::after {
 }
 
 @media (max-width: 1040px) {
-  .igra-del {
+  .frame {
     grid-template-columns: 1fr;
   }
 
@@ -398,11 +338,11 @@ body::after {
   }
 
   .znamka,
-  .kart {
+  .card {
     padding: 14px;
   }
 
-  .platno-ok {
+  .obroba {
     padding: 12px;
   }
 }

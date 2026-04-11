@@ -1,4 +1,4 @@
-const platno = document.getElementById("igraPlatno");
+const platno = document.getElementById("igra");
 const ctx = platno.getContext("2d");
 const tockeEl = document.getElementById("tocke");
 const casEl = document.getElementById("cas");
@@ -13,7 +13,7 @@ const VISINA = platno.height;
 const polmerZoge = 10;
 const visinaPloscka = 14;
 const srednjiPloscek = 110;
-const hitrostPloscka = 7;
+const hitrostPloscka = 4;
 const odmikPlosckaSpodaj = 18;
 
 const vrsticeOpek = 5;
@@ -37,7 +37,6 @@ const tezavnosti = {
 
 let sirinaOpeke;
 let opeke = [];
-let zvezde = [];
 let xZoga;
 let yZoga;
 let dx;
@@ -94,14 +93,6 @@ function narisiKrog(x, y, polmer, polnilo) {
   ctx.fill();
 }
 
-function ustvariZvezde() {
-  return Array.from({ length: 18 }, () => ({
-    x: 22 + Math.random() * (SIRINA - 44),
-    y: 20 + Math.random() * 140,
-    polmer: 1.2 + Math.random() * 2.4,
-    alfa: 0.18 + Math.random() * 0.25
-  }));
-}
 
 function narisiZogo() {
   ctx.save();
@@ -218,7 +209,7 @@ function premakniPloscek() {
 function odbijOdPloscka(naslednjiX) {
   const sredinaPloscka = xPloscek + sirinaPloscka / 2;
   const zadetek = (naslednjiX - sredinaPloscka) / (sirinaPloscka / 2);
-  dx = zadetek * 3.6;
+  dx = zadetek * 1.5;
   dy = -Math.abs(dy);
 }
 
@@ -312,6 +303,7 @@ function posodobiIgro() {
   yZoga = naslednjiY;
 }
 
+//ozadje igre (valovi)
 function narisiOzadje() {
   const morje = ctx.createLinearGradient(0, 0, 0, VISINA);
   morje.addColorStop(0, "#62dce2");
@@ -438,8 +430,8 @@ function ponastaviIgro() {
   nastaviTezavnost();
   xZoga = SIRINA / 2;
   yZoga = VISINA - 70;
-  dx = 2 * (Math.random() > 0.5 ? 1 : -1);
-  dy = -2.8;
+  dx = 1 * (Math.random() > 0.5 ? 1 : -1);
+  dy = -2;
   xPloscek = (SIRINA - sirinaPloscka) / 2;
   desnoDrzi = false;
   levoDrzi = false;
@@ -447,7 +439,6 @@ function ponastaviIgro() {
   preteceneSekunde = 0;
 
   ustvariOpeke();
-  zvezde = ustvariZvezde();
   osveziTocke();
   osveziCas();
 }
