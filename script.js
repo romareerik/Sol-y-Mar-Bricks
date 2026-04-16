@@ -11,23 +11,50 @@ const SIRINA = platno.width;
 const VISINA = platno.height;
 
 const polmerZoge = 10;
+const vizualniPolmerZoge = 17.5;
 const visinaPloscka = 14;
 const srednjiPloscek = 110;
 const hitrostPloscka = 4;
 const odmikPlosckaSpodaj = 18;
 
-const vrsticeOpek = 5;
+const vrsticeOpek = 3;
 const stolpciOpek = 5;
 const razmikOpek = 10;
 const odmikOpekZgoraj = 52;
 const odmikOpekStran = 18;
-const visinaOpeke = 24;
+const razmerjeSadja = 200 / 500;
 
 const paleteOpek = [
   { base: "#ff6454", edge: "#ffe2c3", glow: "rgba(255, 100, 84, 0.34)", crta: "#7f2f28" },
   { base: "#ffc247", edge: "#fff4c2", glow: "rgba(255, 194, 71, 0.34)", crta: "#8f5d14" },
   { base: "#28c7d0", edge: "#e4ffff", glow: "rgba(40, 199, 208, 0.34)", crta: "#0d5f75" }
 ];
+
+function naloziSliko(src) {
+  const slika = new Image();
+  slika.src = src;
+  slika.addEventListener("load", () => {
+    if (typeof narisiPrizor === "function") {
+      narisiPrizor();
+    }
+  });
+  return slika;
+}
+
+const ozadjeMorja = naloziSliko("slike/sea.png");
+const slikaZoge = naloziSliko("slike/zoga.png");
+
+const slikeSadja = [
+  naloziSliko("slike/banana.png"),
+  naloziSliko("slike/lemon.png"),
+  naloziSliko("slike/melon.png")
+];
+
+const slikePloscka = {
+  easy: naloziSliko("slike/lahko.png"),
+  medium: naloziSliko("slike/srednje.png"),
+  hard: naloziSliko("slike/tezko.png")
+};
 
 const tezavnosti = {
   easy: 136,
@@ -36,6 +63,7 @@ const tezavnosti = {
 };
 
 let sirinaOpeke;
+let visinaOpeke;
 let opeke = [];
 let xZoga;
 let yZoga;
@@ -95,51 +123,51 @@ function narisiKrog(x, y, polmer, polnilo) {
 
 
 function narisiZogo() {
-  ctx.save();
-  ctx.shadowBlur = 18;
-  ctx.shadowColor = "rgba(255, 209, 98, 0.55)";
+  if (slikaZoge.complete && slikaZoge.naturalWidth > 0 && slikaZoge.naturalHeight > 0) {
+    ctx.drawImage(
+      slikaZoge,
+      xZoga - vizualniPolmerZoge,
+      yZoga - vizualniPolmerZoge,
+      vizualniPolmerZoge * 2,
+      vizualniPolmerZoge * 2
+    );
+    return;
+  }
 
-  const preliv = ctx.createRadialGradient(xZoga - 3, yZoga - 4, 2, xZoga, yZoga, polmerZoge + 2);
+  const preliv = ctx.createRadialGradient(xZoga - 3, yZoga - 4, 2, xZoga, yZoga, vizualniPolmerZoge + 2);
   preliv.addColorStop(0, "#fffdf0");
   preliv.addColorStop(0.35, "#ffe07f");
   preliv.addColorStop(1, "#ff8a45");
-
-  narisiKrog(xZoga, yZoga, polmerZoge, preliv);
-
-  ctx.shadowBlur = 0;
-  narisiKrog(xZoga - 3, yZoga - 4, 2.5, "rgba(255, 255, 255, 0.7)");
-  ctx.restore();
+  narisiKrog(xZoga, yZoga, vizualniPolmerZoge, preliv);
 }
 
 function narisiPloscek() {
   const yPloscek = VISINA - visinaPloscka - odmikPlosckaSpodaj;
-  const preliv = ctx.createLinearGradient(xPloscek, yPloscek, xPloscek, yPloscek + visinaPloscka);
-  preliv.addColorStop(0, "#5fe0d2");
-  preliv.addColorStop(0.5, "#21b5be");
-  preliv.addColorStop(1, "#0e86ab");
+  const slikaPloscka = slikePloscka[tezavnostEl.value] ?? slikePloscka.medium;
 
   ctx.save();
   ctx.shadowBlur = 20;
   ctx.shadowColor = "rgba(42, 189, 197, 0.42)";
   potZaZaobljenRect(xPloscek, yPloscek, sirinaPloscka, visinaPloscka, 8);
-  ctx.fillStyle = preliv;
-  ctx.fill();
-  ctx.restore();
+  ctx.clip();
 
-  potZaZaobljenRect(xPloscek + 6, yPloscek + 2, sirinaPloscka - 12, 3, 2);
-  ctx.fillStyle = "rgba(255, 255, 255, 0.42)";
-  ctx.fill();
+  if (slikaPloscka.complete && slikaPloscka.naturalWidth > 0 && slikaPloscka.naturalHeight > 0) {
+    ctx.drawImage(slikaPloscka, xPloscek, yPloscek, sirinaPloscka, visinaPloscka);
+  } else {
+    const preliv = ctx.createLinearGradient(xPloscek, yPloscek, xPloscek, yPloscek + visinaPloscka);
+    preliv.addColorStop(0, "#5fe0d2");
+    preliv.addColorStop(0.5, "#21b5be");
+    preliv.addColorStop(1, "#0e86ab");
+    ctx.fillStyle = preliv;
+    ctx.fillRect(xPloscek, yPloscek, sirinaPloscka, visinaPloscka);
+  }
 
-  ctx.save();
-  ctx.strokeStyle = "rgba(8, 80, 110, 0.55)";
-  ctx.lineWidth = 1.5;
-  potZaZaobljenRect(xPloscek, yPloscek, sirinaPloscka, visinaPloscka, 8);
-  ctx.stroke();
   ctx.restore();
 }
 
 function ustvariOpeke() {
   sirinaOpeke = (SIRINA - odmikOpekStran * 2 - razmikOpek * (stolpciOpek - 1)) / stolpciOpek;
+  visinaOpeke = Math.round(Math.min(52, sirinaOpeke * razmerjeSadja));
   opeke = [];
 
   for (let vrstica = 0; vrstica < vrsticeOpek; vrstica += 1) {
@@ -153,36 +181,58 @@ function ustvariOpeke() {
         x: xOpeka,
         y: yOpeka,
         aktivna: true,
-        paleta: paleteOpek[vrstica % paleteOpek.length]
+        paleta: paleteOpek[vrstica % paleteOpek.length],
+        slika: slikeSadja[(vrstica + stolpec) % slikeSadja.length]
       };
     }
   }
 }
 
-function narisiOpeko(opeka) {
+function narisiRezanoSliko(slika, x, y, sirina, visina) {
+  if (!slika.complete || slika.naturalWidth === 0 || slika.naturalHeight === 0) {
+    return false;
+  }
+
+  const razmerjeCilja = sirina / visina;
+  const razmerjeSlike = slika.naturalWidth / slika.naturalHeight;
+  let izvorX = 0;
+  let izvorY = 0;
+  let izvorSirina = slika.naturalWidth;
+  let izvorVisina = slika.naturalHeight;
+
+  if (razmerjeSlike > razmerjeCilja) {
+    izvorSirina = slika.naturalHeight * razmerjeCilja;
+    izvorX = (slika.naturalWidth - izvorSirina) / 2;
+  } else {
+    izvorVisina = slika.naturalWidth / razmerjeCilja;
+    izvorY = (slika.naturalHeight - izvorVisina) / 2;
+  }
+
+  ctx.drawImage(slika, izvorX, izvorY, izvorSirina, izvorVisina, x, y, sirina, visina);
+  return true;
+}
+
+function narisiRezervnoOpeko(opeka) {
   const preliv = ctx.createLinearGradient(opeka.x, opeka.y, opeka.x, opeka.y + visinaOpeke);
   preliv.addColorStop(0, opeka.paleta.edge);
   preliv.addColorStop(0.2, opeka.paleta.base);
   preliv.addColorStop(1, opeka.paleta.base);
+  ctx.fillStyle = preliv;
+  ctx.fill();
+}
 
+function narisiOpeko(opeka) {
   ctx.save();
   ctx.shadowBlur = 18;
   ctx.shadowColor = opeka.paleta.glow;
   potZaZaobljenRect(opeka.x, opeka.y, sirinaOpeke, visinaOpeke, 8);
-  ctx.fillStyle = preliv;
-  ctx.fill();
-  ctx.restore();
+  ctx.clip();
 
-  ctx.save();
-  ctx.strokeStyle = opeka.paleta.crta;
-  ctx.lineWidth = 1.5;
-  potZaZaobljenRect(opeka.x, opeka.y, sirinaOpeke, visinaOpeke, 8);
-  ctx.stroke();
-  ctx.restore();
+  if (!narisiRezanoSliko(opeka.slika, opeka.x, opeka.y, sirinaOpeke, visinaOpeke)) {
+    narisiRezervnoOpeko(opeka);
+  }
 
-  potZaZaobljenRect(opeka.x + 6, opeka.y + 3, sirinaOpeke - 12, 4, 2);
-  ctx.fillStyle = "rgba(255, 255, 255, 0.42)";
-  ctx.fill();
+  ctx.restore();
 }
 
 function narisiOpeke() {
@@ -305,6 +355,14 @@ function posodobiIgro() {
 
 //ozadje igre (valovi)
 function narisiOzadje() {
+  if (ozadjeMorja.complete && ozadjeMorja.naturalWidth > 0 && ozadjeMorja.naturalHeight > 0) {
+    ctx.save();
+    ctx.filter = "blur(1px)";
+    narisiRezanoSliko(ozadjeMorja, -4, -4, SIRINA + 8, VISINA + 8);
+    ctx.restore();
+    return;
+  }
+
   const morje = ctx.createLinearGradient(0, 0, 0, VISINA);
   morje.addColorStop(0, "#62dce2");
   morje.addColorStop(0.34, "#28bfd0");
@@ -463,7 +521,7 @@ function prikaziNavodila() {
       confirmButton: "verano-alert-button"
     },
     html: `
-      <p>Cilj igre je razbiti vseh 25 poletnih blokov.</p>
+      <p>Cilj igre je razbiti vseh 15 sadnih blokov.</p>
       <p>Plošček premikaš z levo in desno puščico ali s tipkama A in D, žogico pa držiš nad valovi.</p>
     `
   });
