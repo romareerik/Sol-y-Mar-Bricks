@@ -41,7 +41,6 @@ function naloziSliko(src) {
   return slika;
 }
 
-const ozadjeMorja = naloziSliko("slike/sea.png");
 const slikaZoge = naloziSliko("slike/zoga.png");
 
 const slikeSadja = [
@@ -355,14 +354,6 @@ function posodobiIgro() {
 
 //ozadje igre (valovi)
 function narisiOzadje() {
-  if (ozadjeMorja.complete && ozadjeMorja.naturalWidth > 0 && ozadjeMorja.naturalHeight > 0) {
-    ctx.save();
-    ctx.filter = "blur(1px)";
-    narisiRezanoSliko(ozadjeMorja, -4, -4, SIRINA + 8, VISINA + 8);
-    ctx.restore();
-    return;
-  }
-
   const morje = ctx.createLinearGradient(0, 0, 0, VISINA);
   morje.addColorStop(0, "#62dce2");
   morje.addColorStop(0.34, "#28bfd0");
