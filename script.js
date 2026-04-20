@@ -479,8 +479,8 @@ function ponastaviIgro() {
   nastaviTezavnost();
   xZoga = SIRINA / 2;
   yZoga = VISINA - 70;
-  dx = 2 * (Math.random() > 0.5 ? 1 : -1);
-  dy = -4;
+  dx = 3 * (Math.random() > 0.5 ? 1 : -1);
+  dy = -6;
   xPloscek = (SIRINA - sirinaPloscka) / 2;
   desnoDrzi = false;
   levoDrzi = false;
