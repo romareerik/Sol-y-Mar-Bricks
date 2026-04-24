@@ -14,11 +14,11 @@ const polmerZoge = 10;
 const vizualniPolmerZoge = 17.5;
 const visinaPloscka = 14;
 const srednjiPloscek = 110;
-const hitrostPloscka = 4;
+const hitrostPloscka = 6;
 const odmikPlosckaSpodaj = 18;
 
-const vrsticeOpek = 3;
-const stolpciOpek = 5;
+const vrsticeOpek = 4;
+const stolpciOpek = 7;
 const razmikOpek = 10;
 const odmikOpekZgoraj = 52;
 const odmikOpekStran = 18;
@@ -77,6 +77,10 @@ let preteceneSekunde = 0;
 let timerId = null;
 let frameId = null;
 let stanjeIgre = "ready";
+
+function steviloOpek() {
+  return vrsticeOpek * stolpciOpek;
+}
 
 function zapisCasa(sekundeSkupaj) {
   const minute = String(Math.floor(sekundeSkupaj / 60)).padStart(2, "0");
@@ -166,7 +170,7 @@ function narisiPloscek() {
 
 function ustvariOpeke() {
   sirinaOpeke = (SIRINA - odmikOpekStran * 2 - razmikOpek * (stolpciOpek - 1)) / stolpciOpek;
-  visinaOpeke = Math.round(Math.min(52, sirinaOpeke * razmerjeSadja));
+  visinaOpeke = Math.round(sirinaOpeke * razmerjeSadja);
   opeke = [];
 
   for (let vrstica = 0; vrstica < vrsticeOpek; vrstica += 1) {
@@ -301,7 +305,7 @@ function preveriOpeke(naslednjiX, naslednjiY) {
         dy = -dy;
       }
 
-      if (tocke === vrsticeOpek * stolpciOpek) {
+      if (tocke === steviloOpek()) {
         koncajIgro(true);
       }
 
@@ -354,6 +358,9 @@ function posodobiIgro() {
 
 //ozadje igre (valovi)
 function narisiOzadje() {
+  const x = (vrednost) => (vrednost / 720) * SIRINA;
+  const y = (vrednost) => (vrednost / 480) * VISINA;
+
   const morje = ctx.createLinearGradient(0, 0, 0, VISINA);
   morje.addColorStop(0, "#62dce2");
   morje.addColorStop(0.34, "#28bfd0");
@@ -364,45 +371,45 @@ function narisiOzadje() {
 
   ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
   ctx.beginPath();
-  ctx.moveTo(0, 70);
-  ctx.quadraticCurveTo(110, 48, 230, 72);
-  ctx.quadraticCurveTo(355, 96, 470, 70);
-  ctx.quadraticCurveTo(592, 44, 720, 74);
-  ctx.lineTo(720, 112);
-  ctx.lineTo(0, 112);
+  ctx.moveTo(0, y(70));
+  ctx.quadraticCurveTo(x(110), y(48), x(230), y(72));
+  ctx.quadraticCurveTo(x(355), y(96), x(470), y(70));
+  ctx.quadraticCurveTo(x(592), y(44), SIRINA, y(74));
+  ctx.lineTo(SIRINA, y(112));
+  ctx.lineTo(0, y(112));
   ctx.closePath();
   ctx.fill();
 
   ctx.fillStyle = "rgba(255, 255, 255, 0.06)";
   ctx.beginPath();
-  ctx.moveTo(0, 154);
-  ctx.quadraticCurveTo(98, 130, 212, 156);
-  ctx.quadraticCurveTo(332, 184, 438, 156);
-  ctx.quadraticCurveTo(572, 126, 720, 160);
-  ctx.lineTo(720, 212);
-  ctx.lineTo(0, 212);
+  ctx.moveTo(0, y(154));
+  ctx.quadraticCurveTo(x(98), y(130), x(212), y(156));
+  ctx.quadraticCurveTo(x(332), y(184), x(438), y(156));
+  ctx.quadraticCurveTo(x(572), y(126), SIRINA, y(160));
+  ctx.lineTo(SIRINA, y(212));
+  ctx.lineTo(0, y(212));
   ctx.closePath();
   ctx.fill();
 
   ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
   ctx.beginPath();
-  ctx.moveTo(0, 286);
-  ctx.quadraticCurveTo(118, 260, 232, 288);
-  ctx.quadraticCurveTo(338, 314, 455, 286);
-  ctx.quadraticCurveTo(580, 258, 720, 292);
-  ctx.lineTo(720, 480);
-  ctx.lineTo(0, 480);
+  ctx.moveTo(0, y(286));
+  ctx.quadraticCurveTo(x(118), y(260), x(232), y(288));
+  ctx.quadraticCurveTo(x(338), y(314), x(455), y(286));
+  ctx.quadraticCurveTo(x(580), y(258), SIRINA, y(292));
+  ctx.lineTo(SIRINA, VISINA);
+  ctx.lineTo(0, VISINA);
   ctx.closePath();
   ctx.fill();
 
   ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
   ctx.beginPath();
-  ctx.moveTo(0, 382);
-  ctx.quadraticCurveTo(110, 360, 220, 386);
-  ctx.quadraticCurveTo(356, 416, 478, 386);
-  ctx.quadraticCurveTo(600, 356, 720, 392);
-  ctx.lineTo(720, 480);
-  ctx.lineTo(0, 480);
+  ctx.moveTo(0, y(382));
+  ctx.quadraticCurveTo(x(110), y(360), x(220), y(386));
+  ctx.quadraticCurveTo(x(356), y(416), x(478), y(386));
+  ctx.quadraticCurveTo(x(600), y(356), SIRINA, y(392));
+  ctx.lineTo(SIRINA, VISINA);
+  ctx.lineTo(0, VISINA);
   ctx.closePath();
   ctx.fill();
 
@@ -411,27 +418,27 @@ function narisiOzadje() {
   ctx.lineWidth = 3.2;
 
   ctx.beginPath();
-  ctx.moveTo(0, 246);
-  ctx.quadraticCurveTo(88, 228, 170, 244);
-  ctx.quadraticCurveTo(272, 262, 360, 242);
-  ctx.quadraticCurveTo(472, 222, 560, 244);
-  ctx.quadraticCurveTo(640, 262, 720, 240);
+  ctx.moveTo(0, y(246));
+  ctx.quadraticCurveTo(x(88), y(228), x(170), y(244));
+  ctx.quadraticCurveTo(x(272), y(262), x(360), y(242));
+  ctx.quadraticCurveTo(x(472), y(222), x(560), y(244));
+  ctx.quadraticCurveTo(x(640), y(262), SIRINA, y(240));
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(0, 326);
-  ctx.quadraticCurveTo(92, 308, 176, 324);
-  ctx.quadraticCurveTo(270, 342, 360, 322);
-  ctx.quadraticCurveTo(456, 304, 548, 322);
-  ctx.quadraticCurveTo(628, 340, 720, 320);
+  ctx.moveTo(0, y(326));
+  ctx.quadraticCurveTo(x(92), y(308), x(176), y(324));
+  ctx.quadraticCurveTo(x(270), y(342), x(360), y(322));
+  ctx.quadraticCurveTo(x(456), y(304), x(548), y(322));
+  ctx.quadraticCurveTo(x(628), y(340), SIRINA, y(320));
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(0, 420);
-  ctx.quadraticCurveTo(94, 404, 180, 418);
-  ctx.quadraticCurveTo(282, 434, 370, 416);
-  ctx.quadraticCurveTo(472, 398, 560, 416);
-  ctx.quadraticCurveTo(642, 432, 720, 412);
+  ctx.moveTo(0, y(420));
+  ctx.quadraticCurveTo(x(94), y(404), x(180), y(418));
+  ctx.quadraticCurveTo(x(282), y(434), x(370), y(416));
+  ctx.quadraticCurveTo(x(472), y(398), x(560), y(416));
+  ctx.quadraticCurveTo(x(642), y(432), SIRINA, y(412));
   ctx.stroke();
   ctx.restore();
 }
@@ -479,8 +486,8 @@ function ponastaviIgro() {
   nastaviTezavnost();
   xZoga = SIRINA / 2;
   yZoga = VISINA - 70;
-  dx = 1.5 * (Math.random() > 0.5 ? 1 : -1);
-  dy = -2;
+  dx = 3 * (Math.random() > 0.5 ? 1 : -1);
+  dy = -5;
   xPloscek = (SIRINA - sirinaPloscka) / 2;
   desnoDrzi = false;
   levoDrzi = false;
@@ -512,7 +519,7 @@ function prikaziNavodila() {
       confirmButton: "verano-alert-button"
     },
     html: `
-      <p>Cilj igre je razbiti vseh 15 sadnih blokov.</p>
+      <p>Cilj igre je razbiti vseh ${steviloOpek()} sadnih blokov.</p>
       <p>Plošček premikaš z levo in desno puščico ali s tipkama A in D, žogico pa držiš nad valovi.</p>
     `
   });

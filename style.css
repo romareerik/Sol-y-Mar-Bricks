@@ -24,7 +24,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 18px;
   overflow: hidden;
   position: relative;
   color: var(--besedilo);
@@ -48,7 +48,7 @@ body::after {
 
 .okvir {
   position: relative;
-  width: min(100%, 1100px);
+  width: min(100%, 1380px);
   padding: 25px;
   border-radius: 30px;
   overflow: hidden;
@@ -58,24 +58,43 @@ body::after {
   backdrop-filter: blur(15px);
 }
 
-.glava {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 18px;
-}
-
-.znamka,
 .card {
   padding: 16px 18px;
   border-radius: 24px;
   border: 1px solid var(--panel-crta);
   box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.15);
-  
+}
+
+.glava {
+  margin-bottom: 12px;
 }
 
 .znamka {
+  padding: 16px 18px;
+  border-radius: 24px;
+  border: 1px solid var(--panel-crta);
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.frame {
   position: relative;
-  overflow: hidden;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(1040px, 1fr) 240px;
+  gap: 18px;
+  align-items: start;
+}
+
+.desno {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  width: 240px;
+}
+
+.nadzor {
+  display: grid;
+  gap: 12px;
 }
 
 .tag,
@@ -85,47 +104,27 @@ body::after {
 }
 
 .tag {
-  margin-bottom: 8px;
-  font-size: 15px;
+  margin-bottom: 6px;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
   color: #ffe8a0;
 }
 
 .naslov {
-  font-size: 50px;
-  line-height: 0.92;
-  letter-spacing: 1px;
+  font-size: 45px;
+  line-height: 0.95;
+  letter-spacing: 0.8px;
   color: #fff8ea;
-  text-shadow:5px 5px 5px rgba(0, 0, 0, 0.1);
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .opis {
-  margin-top: 10px;
-  max-width: 600px;
+  margin-top: 8px;
   color: var(--mehko);
-  font-size: 16px;
-  line-height: 1.45;
-}
-
-.frame {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(700px, 1fr) 230px;
-  gap: 18px;
-  align-items: start;
-}
-
-.desno {
-  min-width: 0;
-  width: 230px;
-}
-
-.nadzor {
-  display: grid;
-  gap: 12px;
+  font-size: 14px;
+  line-height: 1.3;
 }
 
 .card {
@@ -227,6 +226,7 @@ body::after {
 
 .obroba {
   position: relative;
+  width: min(100%, 1040px);
   border-radius: 20px;
   border: 4px solid rgba(11, 71, 108, 0.34);
 }
@@ -336,8 +336,11 @@ body::after {
     border-radius: 24px;
   }
 
-  .znamka,
   .card {
+    padding: 14px;
+  }
+
+  .znamka {
     padding: 14px;
   }
 
